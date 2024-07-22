@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perell Notepad App</title>
+     <link rel="icon" type="image/x-icon" href="./images/notes.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="./scripts/font-awesome/css/all.min.css" rel="stylesheet">
+    <script src="./scripts/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="./scripts/sortable/Sortable.min.js"></script>
+    <style>
+        .dark-mode {
+            background-color: #1a202c;
+            color: #e2e8f0;
+        }
+        .dark-mode .bg-white {
+            background-color: #2d3748;
+        }
+        .dark-mode .bg-gray-100 {
+            background-color: #4a5568;
+        }
+        .dark-mode .text-gray-700 {
+            color: #e2e8f0;
+        }
+        .dark-mode .border-gray-200 {
+            border-color: #4a5568;
+        }
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 30px;
+            height: 15px;
+            margin: 0 5px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 15px;
+            width: 15px;
+            left: 0px;
+            bottom: 0px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+        input:checked + .slider:before {
+            transform: translateX(16px);
+        }
+
+        body.dark-mode {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+        }
+        body.dark-mode .fa-moon {
+           color: lightgrey;
+        }
+
+        .fa-sun {
+            color:grey;
+        }
+        body.dark-mode .fa-sun {
+            color: yellow;
+        }
+
+        .tab.active {
+            background-color: #1F2937;
+        }
+        #notesContainer {
+             border-radius: 0px 10px 10px 10px;
+        }
+
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 min-h-screen flex flex-col">
+    <div class="container mx-auto p-4 flex-grow">
+        <div class="flex justify-between items-center mb-4">
+            <h1 id="perell-notepad-app" class="text-2xl font-bold">Perell Notepad App</h1>
+            <div class="flex items-center space-x-4">
+                <button id="createSection" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"><i class="fas  fa-folder-plus"></i> Create Section</button>
+                <button id="createNote" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"><i class="fas  fa-file-lines"></i> Create Note</button>
+                <button id="collapseAll" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"><i class="fas  fa-up-down"></i> Toggle All Notes</button>
+                <button id="saveAllNotes" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"><i class="fas  fa-download"></i> Save All Notes</button>
+                <!-- TOGGLE DARK LIGHT MODE-->
+                <div class="flex items-center space-x-2">
+                    <div class="toggle-container">
+                        <i class="fas fa-moon"></i>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="mode-toggle">
+                            <span class="slider"></span>
+                        </label>
+                        <i class="fas fa-sun"></i>
+                    </div>
+                </div>
+                <!-- TOGGLE DARK LIGHT MODE-->
+            </div>   
+        </div>
+        <div id="tabBar" class="flex space-x-2 -mb-0 overflow-x-auto"></div>
+        <div id="notesContainer" class="bg-gray-800 p-4 shadow"></div>
+    </div>
+    <div id="bottomBar" class="bg-gray-200 dark:bg-gray-700 p-4 text-center">
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+            Created by Perell on July 2024 with support from Claude AI using tinymce, font-awesome - Version:005
+        </p>
+    </div>
+    <div id="confirmationModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden items-center justify-center">
+        <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
+            <h2 id="confirmationMessage" class="text-xl font-bold mb-4"></h2>
+            <div class="flex justify-end space-x-2">
+                <button id="confirmYes" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">Yes</button>
+                <button id="confirmNo" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded">No</button>
+            </div>
+        </div>
+    </div>
+    <script src="./scripts/app.js"></script>
+</body>
+</html>
